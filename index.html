@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Nấm PTN.com.vn</title>
+  <style>
+    body { font-family: Arial; margin: 0; background: #f4f4f4; }
+    header { background: #2e7d32; color: white; padding: 15px; text-align: center; }
+    .container { width: 80%; margin: auto; padding: 20px; }
+    .post-box { margin-bottom: 20px; }
+    textarea { width: 100%; height: 100px; }
+    button { padding: 10px 20px; background: #2e7d32; color: white; border: none; cursor: pointer; }
+    .post { background: white; padding: 15px; margin-top: 10px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Nấm PTN.com.vn</h1>
+  <p>Chia sẻ thông tin về nấm</p>
+</header>
+
+<div class="container">
+  <div class="post-box">
+    <h3>Đăng bài viết</h3>
+    <textarea id="content" placeholder="Nhập nội dung..."></textarea><br><br>
+    <button onclick="addPost()">Đăng</button>
+  </div>
+
+  <div id="posts"></div>
+</div>
+
+<script>
+  function loadPosts() {
+    let posts = JSON.parse(localStorage.getItem('posts')) || [];
+    let postDiv = document.getElementById('posts');
+    postDiv.innerHTML = '';
+    posts.forEach(p => {
+      let div = document.createElement('div');
+      div.className = 'post';
+      div.innerText = p;
+      postDiv.appendChild(div);
+    });
+  }
+
+  function addPost() {
+    let content = document.getElementById('content').value;
+    if (!content) return;
+
+    let posts = JSON.parse(localStorage.getItem('posts')) || [];
+    posts.unshift(content);
+    localStorage.setItem('posts', JSON.stringify(posts));
+
+    document.getElementById('content').value = '';
+    loadPosts();
+  }
+
+  loadPosts();
+</script>
+
+</body>
+</html>
